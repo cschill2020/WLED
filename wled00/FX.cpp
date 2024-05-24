@@ -5663,7 +5663,8 @@ uint16_t mode_2Dcrazybees(void) {
 
   typedef struct Bee {
     uint8_t posX, posY, aimX, aimY, hue;
-    int8_t deltaX, deltaY, signX, signY, error;
+    int8_t signX, signY;
+    int16_t deltaX, deltaY, error;
     void aimed(uint16_t w, uint16_t h) {
       random16_set_seed(millis());
       aimX = random8(0, w);
@@ -5700,7 +5701,7 @@ uint16_t mode_2Dcrazybees(void) {
       SEGMENT.addPixelColorXY(bee[i].aimX, bee[i].aimY - 1, CHSV(bee[i].hue, 255, 255));
       if (bee[i].posX != bee[i].aimX || bee[i].posY != bee[i].aimY) {
         SEGMENT.setPixelColorXY(bee[i].posX, bee[i].posY, CRGB(CHSV(bee[i].hue, 60, 255)));
-        int8_t error2 = bee[i].error * 2;
+        int16_t error2 = bee[i].error * 2;
         if (error2 > -bee[i].deltaY) {
           bee[i].error -= bee[i].deltaY;
           bee[i].posX += bee[i].signX;
